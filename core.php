@@ -61,7 +61,7 @@ class Core {
     if($follow === true) $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
 
     foreach($iterator AS $file)
-      if(preg_match('#\.php$#', $file)) include $file;
+      if(pathinfo($file, PATHINFO_EXTENSION) == "php") include $file;
   }
 
   // Our simple 404 page.

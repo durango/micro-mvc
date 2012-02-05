@@ -1,0 +1,23 @@
+= Micro MVC
+
+A micro MVC written in PHP. Inspired by Sinatra (http://github.com/sinatra/sinatra).
+
+== Live Example
+
+http://mvc.danieldurante.com
+
+== Installation
+
+1. Download the source and place all of the files (except the "public" directory) under your public_html/www folder.
+2. Place the "index.php" file within your public_html/www folder.
+3. Rename "config.default.ini" to "config.ini"
+4. Edit the controller/view/model files. I've included a basic example to get you started. NOTE: The "models" section is very bare and basic. I highly encouraging swapping it out with your own system.
+5. Edit "routes.php" to reflect your changes.
+
+== Goals
+* Fast
+* Keep it as slim as possible. For a fully featured Sinatra framework use CodeIgniter, CakePHP, or Symfony
+* Keep it classy.
+
+== Feedback
+I'm always looking for ways to improve Fedora as well as my other projects. Shoot me a message on here and fork the project over!

@@ -14,6 +14,46 @@ http://mvc.danieldurante.com
 4. Edit the controller/view/model files. I've included a basic example to get you started. NOTE: The "models" section is very bare and basic. I highly encouraging swapping it out with your own system.
 5. Edit "routes.php" to reflect your changes.
 
+=== Installation on Nginx
+
+In your server block...
+
+    try_files $uri $uri /index.php?path=$args;
+
+So my server block looks like...
+
+    server {
+      listen 80;
+      server_name mvc.danieldurante.com;
+      index index.html index.php;
+
+      location ~ \.php$ {
+        include /opt/nginx/conf/fastcgi_params;
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME /srv/www/mvc.danieldurante.com/public$fastcgi_script_name;
+      }
+
+      location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm)$ {
+        root /srv/www/mvc.danieldurante.com/public;
+        expires max;
+        add_header Pragma public;
+      }
+
+      try_files $uri $uri /index.php?path=$args;
+    }
+
+
+=== Installation on Apache
+
+In your .htaccess (assuming you have mod_rewrite enabled)...
+
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)$ /index.php?path=$1
+
 == Goals
 * Fast
 * Keep it as slim as possible. For a fully featured Sinatra framework use CodeIgniter, CakePHP, or Symfony

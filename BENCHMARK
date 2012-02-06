@@ -1,0 +1,10 @@
+http_load -parallel 10 -seconds 60 urls.txt
+19922 fetches, 10 max parallel, 5.63793e+06 bytes, in 60.0001 seconds
+283 mean bytes/connection
+332.033 fetches/sec, 93965.3 bytes/sec
+msecs/connect: 0.040845 mean, 0.45 max, 0.018 min
+msecs/first-response: 30.0567 mean, 145.951 max, 18.941 min
+HTTP response codes:
+  code 200 -- 19922
+
+Range goes from 325 - 355 req/s.

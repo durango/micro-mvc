@@ -7,12 +7,18 @@ abstract class Controller {
   public $params;
   public $rack = array();
   public $helpers;
+  public $respond_with;
+
+  /* Data types */
+  public $json;
 
   public function __construct($vars){
     self::$core = $vars;
     $this->db       = $vars->db;
     $this->params   = $vars->req->params;
     $this->helpers  = $vars->helpers;
+    $this->json     = new JSON();
+    $this->respond_with = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_EXTENSION);
   }
 
   public function run($method){
@@ -35,4 +41,9 @@ abstract class Controller {
   public function after(){
   }
 }
-?>
+
+/*
+ Abstract classes for rendering as (JSON, serialization, XML, whatever)
+ Eventually we could put some business logic in here if we wanted to
+*/
+class JSON {}

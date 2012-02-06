@@ -19,6 +19,7 @@ class View {
 
     $path = $helpers->to_snake(ucfirst($path));
 
+    // Build our list of directories.
     $dirs = array(dirname(__DIR__).'/views');
     if(file_exists(dirname(__DIR__).'/views/'.strtolower($path)))
       array_push($dirs, dirname(__DIR__).'/views/'.strtolower($path));
@@ -59,7 +60,7 @@ class Smarty {
 
   public function render($file, array $args = array()){
     $this->assign_variables($args);
-    $this->engine->display($file);
+    echo (is_a($file, '\mvc\web\controller\JSON')) ? json_encode($args) : $this->engine->display($file);
   }
 }
 
@@ -78,6 +79,6 @@ class Twig {
   }
 
   public function render($file, array $args = array()){
-    echo $this->engine->render($file, $args);
+    echo (is_a($file, '\mvc\web\controller\JSON')) ? json_encode($args) : $this->engine->render($file, $args);
   }
 }

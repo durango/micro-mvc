@@ -30,11 +30,18 @@ class Route {
       $this->method     = $action[1];
     } else {
       // Time for the bit more complicated route searching...
+      
+      // We can remove .json, .xml, etc.
+      // TODO: Make this more "magical"
+      $remove = array('.json');
+      $path = str_replace($remove, '', $path);
+      
       $replace = '(?P<\1>[^/]+)';
       $pattern = '!:([^/]+)!';
       // Go through each route, replace all ":" variables with regex
       foreach($routes AS $route => $method){
         $r = preg_replace($pattern, $replace, $route);
+
         preg_match_all("!$r!", $path, $matches);
         if(count($matches[0]) > 0 && $matches[0][0] == $path){
           foreach($matches AS $key => $val){

@@ -21,6 +21,9 @@ class HelloWorld extends Controller {
     case 'json':
       $this->render($this->json, $data);
       break;
+    case 'xml':
+      $this->render($this->xml, $data);
+      break;
     default:
       $this->render('test2.html', $data);
       break;

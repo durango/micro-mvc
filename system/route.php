@@ -30,23 +30,22 @@ class Route {
       $this->method     = $action[1];
     } else {
       // Time for the bit more complicated route searching...
-      
+
       // We can remove .json, .xml, etc.
-      // TODO: Make this more "magical"
-      $remove = array('.json');
+      $remove = array('.json','.xml');
       $path = str_replace($remove, '', $path);
-      
+
       $replace = '(?P<\1>[^/]+)';
       $pattern = '!:([^/]+)!';
       // Go through each route, replace all ":" variables with regex
       foreach($routes AS $route => $method){
         // Skip easy routes
-        if(strpos(':', $route) === false) continue;
+        if(strpos(':', $route) === false && $route != $path) continue;
 
         $r = preg_replace($pattern, $replace, $route);
 
         preg_match_all("!$r!", $path, $matches);
-        if(count($matches[0]) > 0 && $matches[0][0] == $path){
+        if((count($matches[0]) > 0 && $matches[0][0] == $path) || $route == $path){
           foreach($matches AS $key => $val){
             if(is_numeric($key)) continue; // Don't need number keys
             $this->params[$key] = $val[0];

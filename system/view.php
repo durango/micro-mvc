@@ -60,7 +60,14 @@ class Smarty {
 
   public function render($file, array $args = array()){
     $this->assign_variables($args);
-    echo (is_a($file, '\mvc\web\controller\JSON')) ? json_encode($args) : $this->engine->display($file);
+    if($file instanceof \mvc\web\controller\JSON)
+      echo json_encode($args);
+    elseif($file instanceof \mvc\web\controller\XML) {
+      header('Content-type: text/xml');
+      echo $file->array_to_xml($args)->asXML();
+    }
+    else
+      echo $this->engine->display($file);
   }
 }
 
@@ -79,6 +86,13 @@ class Twig {
   }
 
   public function render($file, array $args = array()){
-    echo (is_a($file, '\mvc\web\controller\JSON')) ? json_encode($args) : $this->engine->render($file, $args);
+    if($file instanceof \mvc\web\controller\JSON)
+      echo json_encode($args);
+    elseif($file instanceof \mvc\web\controller\XML) {
+      header('Content-type: text/xml');
+      echo $file->array_to_xml($args)->asXML();
+    }
+    else
+      echo $this->engine->render($file, $args);
   }
 }

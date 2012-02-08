@@ -11,6 +11,7 @@ abstract class Controller {
 
   /* Data types */
   public $json;
+  public $xml;
 
   public function __construct($vars){
     self::$core = $vars;
@@ -18,6 +19,7 @@ abstract class Controller {
     $this->params   = $vars->req->params;
     $this->helpers  = $vars->helpers;
     $this->json     = new JSON();
+    $this->xml      = new XML();
     $this->respond_with = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_EXTENSION);
   }
 
@@ -47,3 +49,28 @@ abstract class Controller {
  Eventually we could put some business logic in here if we wanted to
 */
 class JSON {}
+
+class XML {
+  public function array_to_xml($array){
+    if(is_string($array)) return simplexml_load_string($array);
+
+    $xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><data></data>");
+
+    foreach($array as $key => $value) {
+      if(is_array($value)) {
+        if(!is_numeric($key)){
+          $subnode = $xml->addChild($key);
+          $this->array_to_xml($value);
+        }
+        else {
+          $this->array_to_xml($value);
+        }}
+      else {
+        if(is_numeric($key)) $key = "Row";
+        $xml->addChild($key,$value);
+      }
+    }
+
+    return $xml;
+  }
+}

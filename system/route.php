@@ -40,6 +40,9 @@ class Route {
       $pattern = '!:([^/]+)!';
       // Go through each route, replace all ":" variables with regex
       foreach($routes AS $route => $method){
+        // Skip easy routes
+        if(strpos(':', $route) === false) continue;
+
         $r = preg_replace($pattern, $replace, $route);
 
         preg_match_all("!$r!", $path, $matches);

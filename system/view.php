@@ -73,7 +73,7 @@ class Twig {
 
     $loader = new \Twig_Loader_Filesystem($dirs);
     $array = array();
-    if($env == "production") $array = array_merge($array, array('cache' => dirname(__DIR__).'/cache'));
+    if($env == "production") $array += array('cache' => dirname(__DIR__).'/cache');
 
     $this->engine = new \Twig_Environment($loader, $array);
   }

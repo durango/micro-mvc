@@ -8,6 +8,7 @@ abstract class Controller {
   public $rack = array();
   public $helpers;
   public $respond_with;
+  public $extend;
 
   /* Data types */
   public $json;
@@ -18,6 +19,7 @@ abstract class Controller {
     $this->db       = $vars->db;
     $this->params   = $vars->req->params;
     $this->helpers  = $vars->helpers;
+    $this->extend   = $vars->extend;
     $this->json     = new JSON();
     $this->xml      = new XML();
     $this->respond_with = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_EXTENSION);

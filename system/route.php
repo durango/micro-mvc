@@ -19,19 +19,13 @@ class Route {
     include dirname(__DIR__).'/routes.php';
 
     // Do a quick check if our route exists...
-    if(!empty($routes[$path])){
-      $action = explode(':', $routes[$path]);
-      $this->controller = $action[0];
-      $this->method     = $action[1];
-    }
-    elseif(!empty($routes[$xpath])){
-      $action = explode(':', $routes[$xpath]);
-      $this->controller = $action[0];
-      $this->method     = $action[1];
-    } else {
+    if(!empty($routes[$path]))      $this->set_route($routes[$path]);
+    elseif(!empty($routes[$xpath])) $this->set_route($routes[$xpath]);
+    else {
       // Time for the bit more complicated route searching...
 
       // We can remove .json, .xml, etc.
+      // NOTE: Make this more "magical"
       $remove = array('.json','.xml');
       $path = str_replace($remove, '', $path);
 
@@ -40,7 +34,7 @@ class Route {
       // Go through each route, replace all ":" variables with regex
       foreach($routes AS $route => $method){
         // Skip easy routes
-        if(strpos(':', $route) === false && $route != $path) continue;
+        if(strpos($route, ':') === false && $route != $path) continue;
 
         $r = preg_replace($pattern, $replace, $route);
 
@@ -50,11 +44,16 @@ class Route {
             if(is_numeric($key)) continue; // Don't need number keys
             $this->params[$key] = $val[0];
           }
-          $action = explode(':', $method);
-          $this->controller = $action[0];
-          $this->method     = $action[1];
+          $this->set_route($method);
+          break;
         }
       }
     }
+  }
+
+  private function set_route($path){
+      $action = explode(':', $path);
+      $this->controller = $action[0];
+      $this->method     = $action[1];
   }
 }

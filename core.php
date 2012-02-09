@@ -12,18 +12,22 @@ class Core {
   static public $req;
   static public $db;
   static public $connection;
+  static public $extend;
 
   public function __construct(){
     // Load all of the core files.
     self::loadAll(__DIR__.'/system');
 
     // Set the main variables
+    // NOTE: Once 5.4 comes out, we'll want to
+    // replace this with the trait function
     $this->config       = new \mvc\config\Config();
     $this->environment  = $this->config->get('environment');
     $this->helpers      = new \mvc\helpers\Helpers();
     $this->req          = new \mvc\route\Route($this->config);
     $this->connection   = new \mvc\databases\Connection($this->config);
     $this->db           = $this->connection->db;
+    $this->extend       = new \mvc\web\extend\Extend();
 
     // If our request->controller is empty.. we don't have a route!
     if(!$this->req->controller) self::show404();

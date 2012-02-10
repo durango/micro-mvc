@@ -3,6 +3,7 @@ namespace mvc\web\controller;
 
 class HelloWorld extends Controller {
   public function get_index(){
+    $this->helpers->sendfile(dirname(__DIR__).'/test.txt');
     $this->render('hello.html');
   }
 

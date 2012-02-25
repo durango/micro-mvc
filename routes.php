@@ -19,4 +19,5 @@ $routes = array(
   '/test.json' => 'hello_world:test',
   // ... or use $this->respond_with in the controller
   '/test2' => 'hello_world:test2',
+  '/log' => 'home:log',
 );

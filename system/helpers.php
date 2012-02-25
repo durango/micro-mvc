@@ -18,4 +18,18 @@ class Helpers {
     header("Location:{$path}");
     exit;
   }
+
+  public function sendfile($file){
+    // Send a file to the browser, fix MSIE bug.
+    if(ini_get('zlib.output_compression')) 
+      ini_set('zlib.output_compression', 'Off'); 
+    if(file_exists($file)) { 
+      if(strstr($_SERVER["HTTP_USER_AGENT"],"MSIE") == false) { 
+        header("Content-Type: application/force-download"); 
+        header('Content-Description: File Transfer'); 
+      } 
+      readfile($file);
+      exit; 
+    } 
+  }
 }

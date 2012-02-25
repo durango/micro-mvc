@@ -12,6 +12,7 @@ class Core {
   static public $req;
   static public $db;
   static public $connection;
+  static public $extend;
 
   public function __construct(){
     // Load all of the core files.
@@ -26,6 +27,7 @@ class Core {
     $this->req          = new \mvc\route\Route($this->config);
     $this->connection   = new \mvc\databases\Connection($this->config);
     $this->db           = $this->connection->db;
+    $this->extend       = new \mvc\web\extend\Extend();
 
     // If our request->controller is empty.. we don't have a route!
     if(!$this->req->controller) self::show404();

@@ -42,4 +42,11 @@ class Home extends Controller {
   public function get_redirect(){
     $this->helpers->redirect('/');
   }
+
+  public function get_log(){
+    /* The second parameter is the default value.
+       it isn't required. */
+    // Disabled for demo purposes
+    //$this->extend->log("Hello");
+  }
 }

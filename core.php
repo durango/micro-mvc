@@ -18,6 +18,8 @@ class Core {
     self::loadAll(__DIR__.'/system');
 
     // Set the main variables
+    // NOTE: Once 5.4 comes out, we'll want to
+    // replace this with the trait function
     $this->config       = new \mvc\config\Config();
     $this->environment  = $this->config->get('environment');
     $this->helpers      = new \mvc\helpers\Helpers();

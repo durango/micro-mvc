@@ -1,0 +1,9 @@
+- Skip simple routes -- DONE
+- Make routes slightly faster by re-adding a "set controller/method" block before preg_replace() in routes.php
+- Use PDO for MySQL library
+- Extend PDO and add field validations
+- Form Helpers
+- Support for XML
+- Ability to modify headers
+- Remove $this->helpers (just have it $this)
+- Add sendfile helper

@@ -62,9 +62,9 @@ class XML {
           $subnode = $xml->addChild($key);
           $this->array_to_xml($value);
         }
-        else {
+        else
           $this->array_to_xml($value);
-        }}
+      }
       else {
         if(is_numeric($key)) $key = "Row";
         $xml->addChild($key,$value);

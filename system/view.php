@@ -59,15 +59,16 @@ class Smarty {
   }
 
   public function render($file, array $args = array()){
-    $this->assign_variables($args);
     if($file instanceof \mvc\web\controller\JSON)
       echo json_encode($args);
     elseif($file instanceof \mvc\web\controller\XML) {
       header('Content-type: text/xml');
       echo $file->array_to_xml($args)->asXML();
     }
-    else
+    else {
+      $this->assign_variables($args);
       echo $this->engine->display($file);
+    }
   }
 }
 
